@@ -33,3 +33,58 @@ If you are translating audio from a live online meeting (Teams, Zoom, Webex, or 
 3. **Configure the App Script:** Run `python find_devices.py`. Look for **CABLE Output (VB-Audio Virtual Cable)** in the list, note its index number, and put that number into your `config.toml` as shown below.
 
 Now, any audio played in your meeting will drop straight into Rie-san's translator pipeline seamlessly!
+
+### 3. Set Up a Isolated Virtual Environment (venv)
+```bash
+# Create the virtual environment
+python -m venv venv
+
+# Activate the environment (Windows)
+.\venv\Scripts\activate
+
+# Activate the environment (Mac/Linux)
+source venv/bin/activate
+```
+
+### 4. Install python dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Initialize Playwright Web Drivers
+```bash
+playwright install
+```
+
+### Configuration Setup
+1. Find Your Audio Device Index
+Your system recognizes microphones and virtual cables by specific index numbers. To find yours without guessing, run the helper utility:
+```bash
+py find_devices.py
+```
+Look through the printed list, find your preferred microphone or Virtual Cable entry, and note its Index number.
+
+2. Create Your Configuration File
+Create a file named config.toml in the root folder of the project (jp_meeting_assistant/config.toml) and define your local environment setup:
+
+```Ini, TOML
+[audio]
+device_index = 1          # Replace with the index number found via find_devices.py
+sample_rate = 16000
+language_code = "ja-JP"
+```
+How to Run the App
+Ensure your terminal is open in the project folder and your environment is active: (venv).
+Launch the tracking application engine:
+```Bash
+py main.py
+```
+The Single Sign-On (SSO) Step: A Google Chrome browser window will automatically launch.
+
+Complete your standard Single Sign-On steps inside the browser.
+
+Navigate into your designated workspace room and ensure a fresh, completely blank assistant chat window is open.
+
+Return to your terminal, press [ENTER], and the system console will attach seamlessly!
+
+Press [ENTER] again whenever you wish to start or stop live recording segments. Translations will stream instantly to your terminal screen. 
