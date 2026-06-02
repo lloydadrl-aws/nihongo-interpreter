@@ -22,6 +22,7 @@ Have your team members follow these exact steps to deploy the application on the
 ```bash
 git clone [https://github.com/YOUR_GITHUB_USERNAME/jp_meeting_assistant.git](https://github.com/YOUR_GITHUB_USERNAME/jp_meeting_assistant.git)
 cd jp_meeting_assistant
+```
 
 ### 2. Audio Routing via VB-CABLE (Crucial for Virtual Meetings)
 
