@@ -60,7 +60,7 @@ playwright install
 1. Find Your Audio Device Index
 Your system recognizes microphones and virtual cables by specific index numbers. To find yours without guessing, run the helper utility:
 ```bash
-py find_devices.py
+py find_device.py
 ```
 Look through the printed list, find your preferred microphone or Virtual Cable entry, and note its Index number.
 
