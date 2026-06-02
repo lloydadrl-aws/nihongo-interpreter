@@ -20,7 +20,7 @@ Have your team members follow these exact steps to deploy the application on the
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/YOUR_GITHUB_USERNAME/jp_meeting_assistant.git](https://github.com/YOUR_GITHUB_USERNAME/jp_meeting_assistant.git)
+git clone https://github.com/lloydadrl-aws/nihongo-interpreter
 cd jp_meeting_assistant
 ```
 
