@@ -36,7 +36,7 @@ Now, any audio played in your meeting will drop straight into Rie-san's translat
 ### 3. Set Up a Isolated Virtual Environment (venv)
 ```bash
 # Create the virtual environment
-python -m venv venv
+py -m venv venv
 
 # Activate the environment (Windows)
 .\venv\Scripts\activate
