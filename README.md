@@ -64,13 +64,12 @@ py find_device.py
 Look through the printed list, find your preferred microphone or Virtual Cable entry, and note its Index number.
 
 2. Create Your Configuration File
-Create a file named config.toml in the root folder of the project (jp_meeting_assistant/config.toml) and define your local environment setup:
+Create a file named config.toml in the root folder of the project (./config.toml) and define your local environment setup:
 
 ```Ini, TOML
 [audio]
 device_index = 1          # Replace with the index number found via find_devices.py
 sample_rate = 16000
-language_code = "ja-JP"
 ```
 How to Run the App
 Ensure your terminal is open in the project folder and your environment is active: (venv).
