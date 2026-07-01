@@ -86,5 +86,3 @@ Complete your standard Single Sign-On steps inside the browser.
 Navigate into your designated workspace room and ensure a fresh, completely blank assistant chat window is open.
 
 Return to your terminal, press [ENTER], and the system console will attach seamlessly!
-
-Press [ENTER] again whenever you wish to start or stop live recording segments. Translations will stream instantly to your terminal screen. 
