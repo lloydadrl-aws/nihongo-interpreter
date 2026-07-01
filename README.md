@@ -28,11 +28,10 @@ git clone https://github.com/lloydadrl-aws/nihongo-interpreter
 If you are translating audio from a live online meeting (Teams, Zoom, Webex, or a browser window) rather than using a physical microphone in the room, follow these steps:
 
 1. **Install VB-CABLE:** Download and install the driver from [[VB-Audio]([[https://vb-audio.com/Cable/](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip)](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip))](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip). *Note: A system restart is usually required after installation.*
-2. **Extract Contents:** Insall VBCABLE_Setup_x64 in the extracted contents.
-3. **Configure your Meeting App:** Open your meeting software (e.g., Zoom, Teams) or system sound settings, and change the **Speaker/Output Device** to **CABLE Input (VB-Audio Virtual Cable)**.
-4. **Configure the App Script:** Run `python find_devices.py`. Look for **CABLE Output (VB-Audio Virtual Cable)** in the list, note its index number, and put that number into your `config.toml` as shown below.
+2. **Extract Contents:** Extract the contents in the Zip somewhere, folder name does not matter. Then, install VBCABLE_Setup_x64 from the extracted contents.
+3. **Configure your Meeting App:** Open your meeting software (e.g., Zoom, Teams, Google), next go to system sound settings -> volume mixer, and change the "Apps" **Output Device** to **CABLE Input (VB-Audio Virtual Cable)**.
 
-Now, any audio played in your meeting will drop straight into Rie-san's translator pipeline seamlessly!
+Now, any audio played in your meeting will drop straight into RIE-san's translator pipeline seamlessly!
 
 ### 3. Set Up a Isolated Virtual Environment (venv)
 ```bash
@@ -59,22 +58,6 @@ pip install -r requirements.txt
 playwright install
 ```
 
-### Configuration Setup
-1. Find Your Audio Device Index
-Your system recognizes microphones and virtual cables by specific index numbers. To find yours without guessing, run the helper utility:
-```bash
-py find_device.py
-```
-Look through the printed list, find your preferred microphone or Virtual Cable entry, and note its Index number.
-
-2. Create Your Configuration File
-Create a file named config.toml in the root folder of the project (./config.toml) and define your local environment setup:
-
-```Ini, TOML
-[audio]
-device_index = 1          # Replace with the index number found via find_devices.py
-sample_rate = 16000
-```
 How to Run the App
 Ensure your terminal is open in the project folder and your environment is active: (venv).
 Launch the tracking application engine:
