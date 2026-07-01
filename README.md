@@ -27,7 +27,7 @@ git clone https://github.com/lloydadrl-aws/nihongo-interpreter
 
 If you are translating audio from a live online meeting (Teams, Zoom, Webex, or a browser window) rather than using a physical microphone in the room, follow these steps:
 
-1. **Install VB-CABLE:** Download and install the driver from [VB-Audio](https://vb-audio.com/Cable/). *Note: A system restart is usually required after installation.*
+1. **Install VB-CABLE:** Download and install the driver from [VB-Audio]([https://vb-audio.com/Cable/](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip)). *Note: A system restart is usually required after installation.*
 2. **Configure your Meeting App:** Open your meeting software (e.g., Zoom, Teams) or system sound settings, and change the **Speaker/Output Device** to **CABLE Input (VB-Audio Virtual Cable)**.
 3. **Configure the App Script:** Run `python find_devices.py`. Look for **CABLE Output (VB-Audio Virtual Cable)** in the list, note its index number, and put that number into your `config.toml` as shown below.
 
