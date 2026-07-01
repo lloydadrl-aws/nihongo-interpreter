@@ -172,6 +172,74 @@ def send_message_via_browser(page, payload_text):
     except Exception as e:
         return f"[Browser Interaction Error]: {e}"
 
+def record_with_vad(
+    device_idx,
+    sample_rate=16000,
+    threshold=0.01,
+    silence_duration=3.0,
+    block_size=1024
+):
+    """
+    Automatically records speech.
+    Starts when audio exceeds the threshold.
+    Stops after silence_duration seconds of silence.
+    """
+
+    print("🎤 Listening for client...")
+    print(f"\nPress Ctrl+C to end the program.")
+
+    audio_chunks = []
+    recording = False
+    silence_blocks = 0
+
+    max_silence_blocks = int(
+        silence_duration * sample_rate / block_size
+    )
+
+    with sd.InputStream(
+        samplerate=sample_rate,
+        device=device_idx,
+        channels=1,
+        dtype="float32",
+        blocksize=block_size
+    ) as stream:
+
+        while True:
+
+            data, overflow = stream.read(block_size)
+
+            if overflow:
+                print("Audio overflow detected.")
+
+            # Calculate RMS volume
+            volume = np.sqrt(np.mean(np.square(data)))
+
+            if not recording:
+
+                # Wait until someone starts speaking
+                if volume > threshold:
+                    print("🟢 Speech detected.")
+                    recording = True
+                    audio_chunks.append(data.copy())
+
+            else:
+
+                audio_chunks.append(data.copy())
+
+                if volume < threshold:
+                    silence_blocks += 1
+                else:
+                    silence_blocks = 0
+
+                if silence_blocks >= max_silence_blocks:
+                    print("🔴 Speech ended.")
+                    break
+
+    if not audio_chunks:
+        return None
+
+    return np.concatenate(audio_chunks, axis=0)
+
 def main():
     config = load_config()
     device_idx = config.get("audio", {}).get("input_device_index", 2)
@@ -179,13 +247,20 @@ def main():
     r = sr.Recognizer()
 
     print("=== INITIALIZING BROWSER-INTEGRATED TRANSLATOR SYSTEM ===")
-    
-    # 🌟 FORCE THE BROWSER INITIALIZATION PROFILE SPACE
-    user_data_dir = os.path.join(os.environ.get("USERPROFILE", "C:"), "Temp", "pw-profile")
+
+    # Launch Chrome with remote debugging
+    user_data_dir = os.path.join(
+        os.environ.get("USERPROFILE", "C:"), "Temp", "pw-profile"
+    )
+
     import subprocess
     proc = subprocess.Popen([
-        str(CHROME), "--remote-debugging-port=9222", f"--user-data-dir={user_data_dir}", ICA_URL
+        str(CHROME),
+        "--remote-debugging-port=9222",
+        f"--user-data-dir={user_data_dir}",
+        ICA_URL
     ])
+
     time.sleep(3)
 
     with sync_playwright() as p:
@@ -193,61 +268,70 @@ def main():
             browser = p.chromium.connect_over_cdp("http://localhost:9222")
             context = browser.contexts[0]
             page = context.pages[0]
-            
-            # 🌟 EXTRA SAFE GUARD: Force page to navigate fresh to the clean landing URL room
+
             if page.url != ICA_URL:
                 page.goto(ICA_URL)
-                
+
         except Exception as e:
             print(f"Could not link console to browser session: {e}")
             proc.terminate()
             return
 
         print("\n==========================================================")
-        print("👉 INITIAL AUTHENTICATION SELECTION:")
-        print("1. Complete your single sign-on steps inside Chrome.")
-        print("2. Ensure a fresh, completely blank chat window is open.")
+        print("1. Complete IBM SSO login.")
+        print("2. Open a fresh ICA chat.")
         print("==========================================================")
-        input("\n👉 Once your clean agent room is ready, press [ENTER] HERE to attach...")
-        
-        print("\nConsole successfully attached. Ready for live client monitoring!\n")
-        
-        while True:
-            print("\n" + "="*60)
-            input("👉 Press [ENTER] to start recording the Client's Japanese Audio...")
-            
-            client_audio = record_manual_toggle(device_idx, sample_rate)
-            print("[PROCESSING] Decoding client transcript stream...")
-            client_text = transcribe_audio_array(client_audio, r, language_code="ja-JP", sample_rate=sample_rate)
-            
-            if not client_text: continue
-            print(f"▶️ Captured Raw Text: {client_text}")
-            
-            client_payload = f"[Input Type: ExtractedAudioConverted]\nContent: {client_text}"
-            print("Injecting securely via browser session layer...")
-            
-            print("================= CLIENT SPEECH TRANSLATION =================")
-            full_response = send_message_via_browser(page, client_payload)
-            print("=============================================================")
-                
-            # 💾 LOG AUTOMATION: Append the full 3-line block safely to a session file
-            with open("meeting_session_transcript.txt", "a", encoding="utf-8") as log_file:
-                log_file.write(f"\n--- CLIENT TURN ({time.strftime('%H:%M:%S')}) ---\n")
-                log_file.write(full_response + "\n")
-            
-            print("Now prepare your response to the client.")
-            user_input_text = input("👉 Type your English reply here and press [ENTER]: ")
-            
-            if not user_input_text.strip(): continue
-            if user_input_text.lower() == 'exit': break
-                
-            user_payload = f"[Input Type: ReplyOfTheUser]\nContent: {user_input_text}"
-            print("\nSubmitting reply format down browser layer...")
-            
-            agent_reply = send_message_via_browser(page, user_payload)
-            print("\n=================== YOUR GENERATED JAPANESE REPLY ===================")
-            print(agent_reply)
-            print("=====================================================================\n")
+
+        input("\nPress ENTER once ICA is ready...")
+
+        print("\nTranslator attached successfully.")
+        print("Automatic listening has started.")
+        print("Press Ctrl+C to stop.\n")
+
+        try:
+            while True:
+
+                # Automatically waits until someone speaks
+                client_audio = record_with_vad(
+                    device_idx=device_idx,
+                    sample_rate=sample_rate
+                )
+
+                if client_audio is None:
+                    continue
+
+                print("[PROCESSING] Transcribing...")
+
+                client_text = transcribe_audio_array(
+                    client_audio,
+                    r,
+                    language_code="ja-JP",
+                    sample_rate=sample_rate
+                )
+
+                if not client_text:
+                    continue
+
+                print(f"\n🎤 Client: {client_text}")
+
+                client_payload = (
+                    "[Input Type: ExtractedAudioConverted]\n"
+                    f"Content: {client_text}"
+                )
+
+                print("Sending transcript to ICA...")
+
+                translation = send_message_via_browser(
+                    page,
+                    client_payload
+                )
+
+                print("\n================ TRANSLATION ================")
+                print(translation)
+                print("=============================================\n")
+
+        except KeyboardInterrupt:
+            print("\nStopping translator...")
 
         browser.close()
         proc.terminate()
