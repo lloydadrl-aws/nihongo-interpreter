@@ -156,7 +156,7 @@ def record_with_vad(
 
                 # Wait until someone starts speaking
                 if volume > threshold:
-                    print("🟢 Speech detected.\n⏺️  Recording on going.")
+                    print("🟢 Speech detected.\n⏺️  Recording on going. ")
                     recording = True
                     audio_chunks.append(data.copy())
 
