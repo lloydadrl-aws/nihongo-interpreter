@@ -70,4 +70,8 @@ Complete your standard Single Sign-On steps inside the browser.
 
 Navigate into your designated workspace room and ensure a fresh, completely blank assistant chat window is open.
 
+Click the + sign in the chat and select Insert Assistant & Agent. Then select **RIE**.
+
 Return to your terminal, press [ENTER], and the system console will attach seamlessly!
+
+Now let the program receive audio and do its job.
