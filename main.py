@@ -114,7 +114,7 @@ def record_with_vad(
     device_idx,
     sample_rate=16000,
     threshold=0.01,
-    silence_duration=3.0,
+    silence_duration=2,
     block_size=1024
 ):
     """
@@ -156,7 +156,7 @@ def record_with_vad(
 
                 # Wait until someone starts speaking
                 if volume > threshold:
-                    print("🟢 Speech detected.")
+                    print("🟢 Speech detected.\n⏺️  Recording on going.")
                     recording = True
                     audio_chunks.append(data.copy())
 
