@@ -35,6 +35,9 @@ Now, any audio played in your meeting will drop straight into Rie-san's translat
 
 ### 3. Set Up a Isolated Virtual Environment (venv)
 ```bash
+# cd within the repo
+cd nihongo-interpreter
+ 
 # Create the virtual environment
 py -m venv venv
 
