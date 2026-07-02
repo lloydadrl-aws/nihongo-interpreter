@@ -46,7 +46,7 @@ def send_message_via_browser(page, payload_text):
 
         page.click(chat_box_selector)
         page.fill(chat_box_selector, payload_text)
-        time.sleep(0.10)
+        time.sleep(0.1)
 
         page.press(chat_box_selector, "Enter")
 
