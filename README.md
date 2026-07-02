@@ -8,7 +8,7 @@ An automated, real-time tool designed to capture Japanese audio, decode speech-t
 
 Before installing the application, ensure your machine has the following system dependencies installed:
 
-1. **Python 3.11+**: Ensure Python is added to your system environment `PATH` during installation.
+1. **Python 3.12.+**: Ensure Python is added to your system environment `PATH` during installation.
 2. **Google Chrome**: The browser tool hooks natively into your standard Google Chrome installation path.
 3. **Audio Hardware Input**: A working microphone, or a virtual audio cable (like VB-Cable) if routing audio directly from a web meeting (Teams, Zoom, etc.).
 
