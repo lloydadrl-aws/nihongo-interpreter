@@ -46,7 +46,7 @@ def send_message_via_browser(page, payload_text):
 
         page.click(chat_box_selector)
         page.fill(chat_box_selector, payload_text)
-        time.sleep(0.15)
+        time.sleep(0.10)
 
         page.press(chat_box_selector, "Enter")
 
@@ -114,7 +114,7 @@ def record_with_vad(
     device_idx,
     sample_rate=16000,
     threshold=0.01,
-    silence_duration=2,
+    silence_duration=3,
     block_size=1024
 ):
     """
