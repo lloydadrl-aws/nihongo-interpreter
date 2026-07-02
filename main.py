@@ -31,12 +31,13 @@ def transcribe_audio_array(audio_array, recognizer, language_code, sample_rate=1
     try:
         return recognizer.recognize_google(audio_file_data, language=language_code)
     except Exception:
-        print("❌ [STT Error]: Speech could not be decoded.")
+        print("\n❌ [STT Error]: Speech could not be decoded.\n")
         return None
 
 def send_message_via_browser(page, payload_text):
     """Send a message to ICA and return the translated response."""
     try:
+        #Sends client's message to ICA
         chat_box_selector = (
             "textarea, [placeholder*='type'], "
             "[placeholder*='message'], [contenteditable='true']"
@@ -50,62 +51,62 @@ def send_message_via_browser(page, payload_text):
 
         page.press(chat_box_selector, "Enter")
 
-        start_marker = "=== TRANSLATION START ==="
-        end_marker = "=== TRANSLATION END ==="
+        # start_marker = "=== TRANSLATION START ==="
+        # end_marker = "=== TRANSLATION END ==="
 
-        bubble_selectors = (
-            "div[class*='message-content'], "
-            "div[class*='markdown'], "
-            "div[class*='bubble'], "
-            "div[class*='streaming']"
-        )
+        # bubble_selectors = (
+        #     "div[class*='message-content'], "
+        #     "div[class*='markdown'], "
+        #     "div[class*='bubble'], "
+        #     "div[class*='streaming']"
+        # )
 
-        max_attempts = 100
-        translation = ""
+        # max_attempts = 100
+        # translation = ""
 
-        for _ in range(max_attempts):
-            time.sleep(0.1)
+        # for _ in range(max_attempts):
+        #     time.sleep(0.1)
 
-            elements = page.query_selector_all(bubble_selectors)
-            if not elements:
-                continue
+        #     elements = page.query_selector_all(bubble_selectors)
+        #     if not elements:
+        #         continue
 
-            recent_texts = [
-                el.inner_text().strip()
-                for el in elements[-2:]
-                if el.inner_text().strip()
-            ]
+        #     recent_texts = [
+        #         el.inner_text().strip()
+        #         for el in elements[-2:]
+        #         if el.inner_text().strip()
+        #     ]
 
-            if not recent_texts:
-                continue
+        #     if not recent_texts:
+        #         continue
 
-            active_block = ""
+        #     active_block = ""
 
-            for text in reversed(recent_texts):
-                if start_marker in text or end_marker in text:
-                    active_block = text
-                    break
+        #     for text in reversed(recent_texts):
+        #         if start_marker in text or end_marker in text:
+        #             active_block = text
+        #             break
 
-            if not active_block:
-                continue
+        #     if not active_block:
+        #         continue
 
-            if start_marker in active_block:
-                translation = active_block.split(start_marker, 1)[1]
-            else:
-                translation = active_block
+        #     if start_marker in active_block:
+        #         translation = active_block.split(start_marker, 1)[1]
+        #     else:
+        #         translation = active_block
 
-            if "Translated version:" in translation:
-                translation = translation.split("Translated version:", 1)[1]
+        #     if "Translated version:" in translation:
+        #         translation = translation.split("Translated version:", 1)[1]
 
-            if end_marker in translation:
-                translation = translation.split(end_marker, 1)[0]
+        #     if end_marker in translation:
+        #         translation = translation.split(end_marker, 1)[0]
 
-            translation = translation.strip()
+        #     translation = translation.strip()
 
-            if end_marker in active_block:
-                return translation
+        #     if end_marker in active_block:
+        #         return translation
 
-        return translation
+        # return translation
 
     except Exception as e:
         return f"[Browser Interaction Error]: {e}"
@@ -123,7 +124,8 @@ def record_with_vad(
     Stops after silence_duration seconds of silence.
     """
 
-    print("🎤 Listening for client...")
+    print("=============================")
+    print("🎧 Listening...")
     print(f"\nPress Ctrl+C to end the program.")
 
     audio_chunks = []
@@ -218,13 +220,14 @@ def main():
         print("\n==========================================================")
         print("1. Complete IBM SSO login.")
         print("2. Open a fresh ICA chat.")
+        print("3. Click + then Insert Assistant & Agent.")
+        print("4. Select RIE Assitant.")
         print("==========================================================")
 
         input("\nPress ENTER once ICA is ready...")
 
         print("\nTranslator attached successfully.")
-        print("Automatic listening has started.")
-        print("Press Ctrl+C to stop.\n")
+        print("Automatic listening has started.\n")
 
         try:
             while True:
@@ -259,14 +262,17 @@ def main():
 
                 print("\nRIE is translating it...")
 
-                translation = send_message_via_browser(
+                # translation 
+                send_message_via_browser(
                     page,
                     client_payload
                 )
+                
+                print("\nTranslation success! Check the ICA output and use /r for your reply. \n")
 
-                print("\n================ TRANSLATION ================")
-                print(translation)
-                print("=============================================\n")
+                # print("\n================ TRANSLATION ================")
+                # print(translation)
+                # print("=============================================\n")
 
         except KeyboardInterrupt:
             print("\nStopping translator...")
