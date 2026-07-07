@@ -24,7 +24,7 @@ git clone https://github.com/lloydadrl-aws/nihongo-interpreter
 ### 2. Audio Routing via VB-CABLE (Crucial for Virtual Meetings)
 
 ### A Note on Security & Data Privacy (VB-CABLE)
-We recommend VB-AUDIO Virtual Cable because it is an industry-standard digital audio driver used globally by audio professionals. 
+I recommend VB-AUDIO Virtual Cable because it is an industry-standard digital audio driver used globally by audio professionals. 
 * **Data Security:** It operates 100% offline. It does not have network access, nor does it log, collect, or transmit any meeting audio or data outside your local machine.
 * **System Safety:** The installers are digitally signed by Microsoft and fully pass all enterprise-grade antivirus scans (0 flags on VirusTotal).
 
