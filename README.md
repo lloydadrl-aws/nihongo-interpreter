@@ -16,8 +16,6 @@ Before installing the application, ensure your machine has the following system 
 
 ## Quick Start Installation
 
-Have your team members follow these exact steps to deploy the application on their local device:
-
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/lloydadrl-aws/nihongo-interpreter
