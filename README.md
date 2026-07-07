@@ -63,7 +63,7 @@ channels = 1
 silence_duration = 5
 ```
 
-### Note: ### You should check other variables inside config.toml and insert necessary data.
+* Note: You should check other variables inside config.toml and insert necessary data. *
 
 ### 3. Set Up a Isolated Virtual Environment (venv)
 ```bash
