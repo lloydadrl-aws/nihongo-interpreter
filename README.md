@@ -35,7 +35,7 @@ If you are translating audio from a live online meeting (Teams, Zoom, Webex, or 
 3. **Configure your Meeting App:** Open your meeting software (e.g., Zoom, Teams, Google), next go to system sound settings -> volume mixer, and change the "Apps" **Output Device** to **CABLE Input (VB-Audio Virtual Cable)**.
 
 Now, any audio played in your meeting will drop straight into RIE-san's translator pipeline seamlessly!
-### 2.1 Identifying Channel Index
+### 2.1 Identifying Audio Device Index
 This would be a one-time setup thing only. When this is done, user can just run the program anytime.
 
 Run this program:
