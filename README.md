@@ -16,14 +16,17 @@ Before installing the application, ensure your machine has the following system 
 
 ## Quick Start Installation
 
-Have your team members follow these exact steps to deploy the application on their local device:
-
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/lloydadrl-aws/nihongo-interpreter
 ```
 
 ### 2. Audio Routing via VB-CABLE (Crucial for Virtual Meetings)
+
+### A Note on Security & Data Privacy (VB-CABLE)
+We recommend VB-AUDIO Virtual Cable because it is an industry-standard digital audio driver used globally by audio professionals. 
+* **Data Security:** It operates 100% offline. It does not have network access, nor does it log, collect, or transmit any meeting audio or data outside your local machine.
+* **System Safety:** The installers are digitally signed by Microsoft and fully pass all enterprise-grade antivirus scans (0 flags on VirusTotal).
 
 If you are translating audio from a live online meeting (Teams, Zoom, Webex, or a browser window) rather than using a physical microphone in the room, follow these steps:
 
