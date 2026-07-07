@@ -35,8 +35,19 @@ py -m venv venv
 # Activate the environment (Mac/Linux)
 source venv/bin/activate
 ```
+*Note: The terminal should have (venv) at the left most display.*
 
-### 3. Audio Routing via VB-CABLE (Crucial for Virtual Meetings)
+### 3. Install python dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Initialize Playwright Web Drivers
+```bash
+playwright install
+```
+
+### 5. Audio Routing via VB-CABLE (Crucial for Virtual Meetings)
 
 ### A Note on Security & Data Privacy (VB-CABLE)
 I recommend VB-AUDIO Virtual Cable because it is an industry-standard digital audio driver used globally by audio professionals. 
@@ -50,7 +61,7 @@ If you are translating audio from a live online meeting (Teams, Zoom, Webex, or 
 3. **Configure your Meeting App:** Open your meeting software (e.g., Zoom, Teams, Google), next go to system sound settings -> volume mixer, and change the "Apps" **Output Device** to **CABLE Input (VB-Audio Virtual Cable)**.
 
 Now, any audio played in your meeting will drop straight into RIE-san's translator pipeline seamlessly!
-### 3.1 Identifying Audio Device Index
+### 5.1 Identifying Audio Device Index
 This would be a one-time setup thing only. When this is done, user can just run the program anytime.
 
 Run this program:
@@ -78,16 +89,6 @@ channels = 1
 silence_duration = 5
 ```
 *Note: You should check other variables inside config.toml and insert necessary info.*
-
-### 4. Install python dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 5. Initialize Playwright Web Drivers
-```bash
-playwright install
-```
 
 ### How to Run the App
 Click ```run.bat``` found in project folder.
