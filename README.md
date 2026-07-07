@@ -22,6 +22,8 @@ git clone https://github.com/lloydadrl-aws/nihongo-interpreter
 ```
 
 ### 2. Set Up a Isolated Virtual Environment (venv)
+You only need to do this one time only.
+
 ```bash
 # cd within the repo
 cd nihongo-interpreter
@@ -36,6 +38,7 @@ py -m venv venv
 source venv/bin/activate
 ```
 *Note: The terminal should have (venv) at the left most display.*
+``` (venv) C:\Users\lloyd.lindo\Desktop\... ```
 
 ### 3. Install python dependencies
 ```bash
@@ -89,6 +92,8 @@ channels = 1
 silence_duration = 5
 ```
 *Note: You should check other variables inside config.toml and insert necessary info.*
+
+After editing ```config.toml``` hit save it and you can just close everything since the set up is all finished.
 
 ### How to Run the App
 Click ```run.bat``` found in project folder.
