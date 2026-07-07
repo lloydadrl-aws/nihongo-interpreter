@@ -98,12 +98,14 @@ After editing ```config.toml``` hit save and you can just close everything since
 ### How to Run the App
 Make sure every variables in ```config.toml``` has values. 
 
-For ```chrome_path```, locate your google chrome browser path in your local device. Once located, perform Ctrl + Shift + Right-click then select Copy as path.  
+For ```chrome_path```, locate your google chrome browser path in your local device. Once located, perform ```Ctrl + Shift + Right-click``` then select ```Copy as path```
 After pasting the path in this variable, add black slashes \ for each current back slash.
-```C:\Users\lloyd.lindo\Desktop\``` -> ```C:\\Users\\lloyd.lindo\\Desktop\\```
+
+From ```C:\Users\lloyd.lindo\Desktop\``` to ```C:\\Users\\lloyd.lindo\\Desktop\\```
 
 For ```silence_duration```, the program interprets this variable as per seconds. Be cautious on what will you initialize in this variable. 
 ```silence_duration = 5 # the program will wait 5 seconds before sending the transcribed message to ICA```
+
 *I recommend only using 3 and test it using google translate. Adjust more that fit your preference.*
 
 Click ```run.bat``` found in project folder.
