@@ -4,11 +4,12 @@ import sounddevice as sd
 import soundfile as sf
 import speech_recognition as sr
 
-def record_with_vad(device_idx, sample_rate=16000, threshold=0.01, silence_duration=3, block_size=1024):
+def record_with_vad(device_idx, sample_rate=16000, silence_duration=3, threshold=0.01,  block_size=1024):
     """
     Automatically tracks and records speech.
     Starts capturing when audio exceeds the threshold, stops after quiet thresholds.
     """
+    print(silence_duration)
     print("=============================")
     print("🎧 Listening...")
     print("\nPress Ctrl+C to exit.")
