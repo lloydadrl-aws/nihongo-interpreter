@@ -62,6 +62,7 @@ If you are translating audio from a live online meeting (Teams, Zoom, Webex, or 
 1. **Install VB-CABLE:** Download and install the driver from [[VB-Audio]([[https://vb-audio.com/Cable/](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip)](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip))](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip). *Note: A system restart is usually required after installation.*
 2. **Extract Contents:** Extract the contents in the Zip somewhere, folder name does not matter. Then, install VBCABLE_Setup_x64 from the extracted contents.
 3. **Configure your Meeting App:** Open your meeting software (e.g., Zoom, Teams, Google), next go to system sound settings -> volume mixer, and change the "Apps" **Output Device** to **CABLE Input (VB-Audio Virtual Cable)**.
+3.1 **Configure CABLE Output Properties:** Go to System -> Sound -> Advanced -> More sound settings -> Recording tab -> CABLE Output -> Properties -> Listen tab -> Check Listen to this device -> Hit Apply -> Hit OK -> Close settings.
 
 Now, any audio played in your meeting will drop straight into RIE-san's translator pipeline seamlessly!
 ### 5.1 Identifying Audio Device Index
