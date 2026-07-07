@@ -9,7 +9,6 @@ def record_with_vad(device_idx, sample_rate=16000, silence_duration=3, threshold
     Automatically tracks and records speech.
     Starts capturing when audio exceeds the threshold, stops after quiet thresholds.
     """
-    print(silence_duration)
     print("=============================")
     print("🎧 Listening...")
     print("\nPress Ctrl+C to exit.")
