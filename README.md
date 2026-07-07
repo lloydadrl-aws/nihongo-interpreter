@@ -60,8 +60,9 @@ Index [23]: Input (VB-Audio Point) (Channels: 16)
 
 👉 Copy the Index number of your microphone or VB-Cable into config.toml
 ```
-In my case, since the ```CABLE Output...``` is found in index [2], I will use index [2] for my ```input_device_index``` found in ```conf.toml```
-Sample found in conf.toml
+In my case, since the ```CABLE Output...``` is found in index [2], I will use index [2] for my ```input_device_index``` found in ```conf.toml```.
+
+Sample configuration in ```conf.toml```
 ```
 [audio]
 input_device_index = 2 <--- insert the value here
