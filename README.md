@@ -35,6 +35,40 @@ If you are translating audio from a live online meeting (Teams, Zoom, Webex, or 
 3. **Configure your Meeting App:** Open your meeting software (e.g., Zoom, Teams, Google), next go to system sound settings -> volume mixer, and change the "Apps" **Output Device** to **CABLE Input (VB-Audio Virtual Cable)**.
 
 Now, any audio played in your meeting will drop straight into RIE-san's translator pipeline seamlessly!
+### 2.1 Identifying Channel Index
+This would be a one-time setup thing only. When this is done, user can just run the program anytime.
+
+Run this program:
+```
+py find_device.py
+```
+Sample output:
+```
+================ AVAILABLE AUDIO DEVICES ================
+Index [0]: Microsoft Sound Mapper - Input (Channels: 2)
+Index [1]: Internal Microphone (Cirrus Log (Channels: 2)
+Index [2]: CABLE Output (VB-Audio Virtual  (Channels: 16)
+Index [7]: Primary Sound Capture Driver (Channels: 2)
+Index [8]: Internal Microphone (Cirrus Logic Superior High Definition Audio) (Channels: 2)
+Index [9]: CABLE Output (VB-Audio Virtual Cable) (Channels: 16)
+Index [17]: CABLE Output (VB-Audio Virtual Cable) (Channels: 2)
+Index [18]: Internal Microphone (Cirrus Logic Superior High Definition Audio) (Channels: 2)
+Index [20]: Microphone (HD Audio Microphone 2) (Channels: 2)
+Index [21]: CABLE Output (VB-Audio Point) (Channels: 16)
+Index [23]: Input (VB-Audio Point) (Channels: 16)
+=========================================================
+
+👉 Copy the Index number of your microphone or VB-Cable into config.toml
+```
+In my case, since the ```CABLE Output...``` is found in index [2], I will use index [2] for my ```input_device_index``` found in ```conf.toml```
+Sample found in conf.toml
+```
+[audio]
+input_device_index = 2 <--- insert the value here
+sample_rate = 16000     
+channels = 1            
+chunk_duration_seconds = 5
+```
 
 ### 3. Set Up a Isolated Virtual Environment (venv)
 ```bash
