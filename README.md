@@ -62,8 +62,7 @@ sample_rate = 16000
 channels = 1            
 silence_duration = 5
 ```
-
-* Note: You should check other variables inside config.toml and insert necessary data. *
+*Note: You should check other variables inside config.toml and insert necessary info.*
 
 ### 3. Set Up a Isolated Virtual Environment (venv)
 ```bash
@@ -90,12 +89,9 @@ pip install -r requirements.txt
 playwright install
 ```
 
-How to Run the App
-Ensure your terminal is open in the project folder and your environment is active: (venv).
-Launch the tracking application engine:
-```Bash
-py main.py
-```
+### How to Run the App
+Click ```run.bat``` found in project folder.
+
 The Single Sign-On (SSO) Step: A Google Chrome browser window will automatically launch.
 
 Complete your standard Single Sign-On steps inside the browser.
