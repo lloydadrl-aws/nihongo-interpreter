@@ -48,28 +48,22 @@ Sample output:
 Index [0]: Microsoft Sound Mapper - Input (Channels: 2)
 Index [1]: Internal Microphone (Cirrus Log (Channels: 2)
 Index [2]: CABLE Output (VB-Audio Virtual  (Channels: 16)
-Index [7]: Primary Sound Capture Driver (Channels: 2)
-Index [8]: Internal Microphone (Cirrus Logic Superior High Definition Audio) (Channels: 2)
-Index [9]: CABLE Output (VB-Audio Virtual Cable) (Channels: 16)
-Index [17]: CABLE Output (VB-Audio Virtual Cable) (Channels: 2)
-Index [18]: Internal Microphone (Cirrus Logic Superior High Definition Audio) (Channels: 2)
-Index [20]: Microphone (HD Audio Microphone 2) (Channels: 2)
-Index [21]: CABLE Output (VB-Audio Point) (Channels: 16)
-Index [23]: Input (VB-Audio Point) (Channels: 16)
 =========================================================
 
 👉 Copy the Index number of your microphone or VB-Cable into config.toml
 ```
-In my case, since the ```CABLE Output...``` is found in index [2], I will use index [2] for my ```input_device_index``` found in ```conf.toml```.
+In my case, since the ```CABLE Output (VB-Audio Virtual``` was found in index [2], I will use that index for my ```input_device_index``` variable found in ```config.toml```.
 
-Sample configuration in ```conf.toml```
+Sample configuration in ```config.toml```
 ```
 [audio]
 input_device_index = 2 <--- insert the value here
 sample_rate = 16000     
 channels = 1            
-chunk_duration_seconds = 5
+silence_duration = 5
 ```
+
+### Note: ### You should check other variables inside config.toml and insert necessary data.
 
 ### 3. Set Up a Isolated Virtual Environment (venv)
 ```bash
