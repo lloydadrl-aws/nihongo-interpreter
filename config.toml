@@ -1,20 +1,14 @@
-# Centralized configuration for Email Triage System
-# ICA Settings
-base_url = "https://japan.ica.ibm.com/ica/curatorai/services/chat/new-chat/chats"
+# ICA new-chat url
+[ICA_URL]
+base_url = "https://japan.ica.ibm.com/ica/curatorai/apps/ui/new-chat/"
 
-# Team metadata
-team_id = "6a167fd3938a180a288b97a8"
-team_name = "Ricoh%20AMS%20PH%20Team"
-default_assistant_id = "a45c2bb4-6033-471d-94e0-0a2074084822"
+# Path of your google chrome browser
+[chrome]
+chrome_path = ""
 
-# Use the fresh active chat tracking ID visible on your screen:
-session_id = "6a16979e938a180a288d8636"
-
+# Audio Settings
 [audio]
-input_device_index = 2
+input_device_index = 
 sample_rate = 16000     
 channels = 1            
-chunk_duration_seconds = 5
-
-[system]
-default_mode = "LiveMeeting"
+silence_duration = 

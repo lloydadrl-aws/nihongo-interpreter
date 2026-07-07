@@ -11,12 +11,17 @@ def main():
     # 1. Boot up configurations dynamically from TOML
     config = load_config()
     audio_cfg = config.get("audio", {})
-    
+
     device_idx = audio_cfg.get("input_device_index", 2)
     sample_rate = audio_cfg.get("sample_rate", 16000)
-    chrome_path = config.get("CHROME", r"C:\Program Files\Google\Chrome\Application\chrome.exe")
-    ica_url = config.get("ICA_URL", "https://japan.ica.ibm.com/ica/curatorai/apps/ui/new-chat/")
-    
+    silence_duration = audio_cfg.get("silence_duration", 3)
+
+    chrome = config.get("chrome", {})
+    chrome_path = chrome.get("chrome_path", "")
+
+    ica = config.get("ICA_URL", {})
+    ica_url = ica.get("base_url", "")
+
     r = sr.Recognizer()
 
     print("=== INITIALIZING BROWSER-INTEGRATED TRANSLATOR SYSTEM ===")
@@ -51,7 +56,7 @@ def main():
         try:
             while True:
                 # 3. Capture audio streams via Audio Engine
-                client_audio = record_with_vad(device_idx=device_idx, sample_rate=sample_rate)
+                client_audio = record_with_vad(device_idx=device_idx, sample_rate=sample_rate, silence_duration=silence_duration)
                 if client_audio is None:
                     continue
 
