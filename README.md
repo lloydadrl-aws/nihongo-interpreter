@@ -25,6 +25,11 @@ git clone https://github.com/lloydadrl-aws/nihongo-interpreter
 
 ### 2. Audio Routing via VB-CABLE (Crucial for Virtual Meetings)
 
+### A Note on Security & Data Privacy (VB-CABLE)
+We recommend VB-AUDIO Virtual Cable because it is an industry-standard digital audio driver used globally by audio professionals. 
+* **Data Security:** It operates 100% offline. It does not have network access, nor does it log, collect, or transmit any meeting audio or data outside your local machine.
+* **System Safety:** The installers are digitally signed by Microsoft and fully pass all enterprise-grade antivirus scans (0 flags on VirusTotal).
+
 If you are translating audio from a live online meeting (Teams, Zoom, Webex, or a browser window) rather than using a physical microphone in the room, follow these steps:
 
 1. **Install VB-CABLE:** Download and install the driver from [[VB-Audio]([[https://vb-audio.com/Cable/](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip)](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip))](https://download.vb-audio.com/Download_CABLE/VBCABLE_Driver_Pack45.zip). *Note: A system restart is usually required after installation.*
