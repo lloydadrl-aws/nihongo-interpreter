@@ -36,7 +36,7 @@ def record_with_vad(device_idx, sample_rate=16000, silence_duration=3, threshold
 
             if not recording:
                 if volume > threshold:
-                    print("🟢 Speech detected.\n⏺️  Recording ongoing...")
+                    print("🟢 Speech detected.\n⏺️ Recording ongoing...")
                     recording = True
                     audio_chunks.append(data.copy())
             else:
