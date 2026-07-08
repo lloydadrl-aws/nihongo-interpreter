@@ -68,7 +68,7 @@ def main():
                     continue
                 
                 print("\nTranscribed message sent to ICA Assistant.")
-                client_payload = f"/c\n---\n{client_text}"
+                client_payload = f"/c {client_text}"
 
                 print("\nRIE is translating it...")
                 
