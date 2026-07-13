@@ -4,11 +4,11 @@ base_url = "https://japan.ica.ibm.com/ica/curatorai/apps/ui/new-chat/"
 
 # Path of your google chrome browser
 [chrome]
-chrome_path = ""
+chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 
 # Audio Settings
 [audio]
-input_device_index = 
+input_device_index = 2
 sample_rate = 16000     
 channels = 1            
-silence_duration = 
+silence_duration = 3
