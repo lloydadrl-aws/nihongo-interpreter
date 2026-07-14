@@ -1,83 +1,79 @@
-import importlib
+import time
+import threading
 import speech_recognition as sr
 from playwright.sync_api import sync_playwright
 
-# Import our customized core modules
+# Core components
 from core.config_loader import load_config
-from core.audio_engine import record_with_vad, transcribe_audio_array
 from core.browser_engine import launch_monitored_chrome, send_message_via_browser
 
+# Clean pipeline imports
+import core.pipeline_workers as workers
+from core.pipeline_workers import audio_queue, text_queue
+
 def main():
-    # 1. Boot up configurations dynamically from TOML
     config = load_config()
     audio_cfg = config.get("audio", {})
+    chrome_cfg = config.get("chrome", {})
+    ica_cfg = config.get("ICA_URL", {})
 
     device_idx = audio_cfg.get("input_device_index", 2)
     sample_rate = audio_cfg.get("sample_rate", 16000)
-    silence_duration = audio_cfg.get("silence_duration", 3)
+    silence_duration = audio_cfg.get("silence_duration", 1.5) 
+    chrome_path = chrome_cfg.get("chrome_path", "")
+    ica_url = ica_cfg.get("base_url", "")
 
-    chrome = config.get("chrome", {})
-    chrome_path = chrome.get("chrome_path", "")
-
-    ica = config.get("ICA_URL", {})
-    ica_url = ica.get("base_url", "")
-
-    r = sr.Recognizer()
+    recognizer = sr.Recognizer()
 
     print("=== INITIALIZING BROWSER-INTEGRATED TRANSLATOR SYSTEM ===")
-
-    # 2. Spawn Chrome via Browser Engine
     proc = launch_monitored_chrome(chrome_path, ica_url)
 
     with sync_playwright() as p:
         try:
             browser = p.chromium.connect_over_cdp("http://localhost:9222")
-            context = browser.contexts[0]
-            page = context.pages[0]
-
+            page = browser.contexts[0].pages[0]
             if page.url != ica_url:
                 page.goto(ica_url)
-
         except Exception as e:
             print(f"❌ Could not link console to browser session: {e}")
             proc.terminate()
             return
 
         print("\n==========================================================")
-        print("1. Complete IBM SSO login.")
-        print("2. Open a fresh ICA chat.")
-        print("3. Click + then Insert Assistant & Agent.")
-        print("4. Select RIE Assistant.")
+        print("1. Complete IBM SSO login. \n2. Open a fresh ICA chat.")
+        print("3. Add RIE Assistant.")
         print("==========================================================")
-
         input("\nPress ENTER once ICA is ready...")
-        print("\nTranslator attached successfully. Automatic listening has started.\n")
+        print("\nTranslator attached successfully. Non-blocking pipelines running.\n")
+
+        # 1. Start background workers via the pipeline module
+        threading.Thread(
+            target=workers.audio_recording_worker,
+            args=(device_idx, sample_rate, silence_duration),
+            daemon=True
+        ).start()
+
+        threading.Thread(
+            target=workers.audio_processor_worker, 
+            args=(recognizer, "ja-JP", sample_rate),
+            daemon=True
+        ).start()
 
         try:
+            # 2. Main execution event loop handles browser typing
             while True:
-                # 3. Capture audio streams via Audio Engine
-                client_audio = record_with_vad(device_idx=device_idx, sample_rate=sample_rate, silence_duration=silence_duration)
-                if client_audio is None:
-                    continue
+                while not text_queue.empty():
+                    input_number, payload_text = text_queue.get_nowait()
+                    send_message_via_browser(page, payload_text)
+                    print(f"🚀 Transcribed input {input_number} sent to ICA...\n")
+                    text_queue.task_done()
 
-                print("[PROCESSING] Transcribing...")
-
-                # 4. Process Speech-to-Text translation triggers
-                client_text = transcribe_audio_array(client_audio, r, language_code="ja-JP", sample_rate=sample_rate)
-                if not client_text:
-                    continue
-                
-                print("\nTranscribed message sent to ICA Assistant.")
-                client_payload = f"/c \n {client_text}"
-
-                print("\nRIE is translating it...")
-                
-                # 5. Hand over final strings back into active browser contexts
-                send_message_via_browser(page, client_payload)
-                print("\nTranslation success! Check the ICA output and use /r for your reply.\n")
+                time.sleep(0.05)
+                page.evaluate("() => {}") 
 
         except KeyboardInterrupt:
             print("\nStopping translator pipelines...")
+            workers.running = False
 
         browser.close()
         proc.terminate()

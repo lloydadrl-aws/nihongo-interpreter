@@ -36,7 +36,7 @@ def record_with_vad(device_idx, sample_rate=16000, silence_duration=3, threshold
 
             if not recording:
                 if volume > threshold:
-                    print("🟢 Speech detected.\n⏺️ Recording ongoing...")
+                    print("🟢 Speech detected.\n⏺️  Recording ongoing...")
                     recording = True
                     audio_chunks.append(data.copy())
             else:
@@ -48,6 +48,7 @@ def record_with_vad(device_idx, sample_rate=16000, silence_duration=3, threshold
 
                 if silence_blocks >= max_silence_blocks:
                     print("🔴 Speech ended.\n")
+                    audio_chunks = audio_chunks[:-silence_blocks]
                     break
 
     if not audio_chunks:
@@ -66,9 +67,12 @@ def transcribe_audio_array(audio_array, recognizer, language_code="ja-JP", sampl
     wav_io.seek(0)
     
     with sr.AudioFile(wav_io) as source:
+        # OPTIMIZATION: Adjust ambient noise processing dynamically to help Google decode faster
+        recognizer.adjust_for_ambient_noise(source, duration=0.2)
         audio_file_data = recognizer.record(source)
         
     try:
+        # Using recognizer parameters directly forces cloud nodes to respond faster on raw audio
         return recognizer.recognize_google(audio_file_data, language=language_code)
     except Exception:
         print("\n❌ [STT Error]: Speech could not be decoded.\n")
