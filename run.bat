@@ -3,6 +3,6 @@ cd /d "%~dp0"
 
 call venv\Scripts\activate.bat
 
-py main.py
+py main.py %*
 
 pause
