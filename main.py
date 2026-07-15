@@ -97,7 +97,7 @@ def main():
                     input_number, payload_text = text_queue.get_nowait()
                     before_count = count_response_bubbles(page)
                     sent_ok = send_message_via_browser(page, payload_text)
-                    print(f"🚀 Transcribed input {input_number} sent to ICA...\n")
+                    print(f"\n🚀 Transcribed input {input_number} sent to ICA...\n")
                     text_queue.task_done()
 
                     if sent_ok:

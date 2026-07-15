@@ -25,7 +25,7 @@ def audio_recording_worker(device_idx, sample_rate, silence_duration, threshold=
             )
 
             if client_audio is not None and running:
-                print(f"📥 Audio input {input_counter} captured! Appending to processing queue.")
+                print(f"📥 Audio input {input_counter} captured! Appending to processing queue.\n")
                 audio_queue.put((input_counter, client_audio))
                 input_counter += 1
         except Exception as e:
@@ -41,7 +41,7 @@ def audio_processor_worker(recognizer, language_code, sample_rate):
         except queue.Empty:
             continue
 
-        print(f"[PROCESSING] Transcribing input {input_number} in background...")
+        print(f"\n[PROCESSING] Transcribing input {input_number} in background...\n")
         client_text = transcribe_audio_array(audio_data, recognizer, language_code=language_code, sample_rate=sample_rate)
 
         if client_text and client_text.strip():

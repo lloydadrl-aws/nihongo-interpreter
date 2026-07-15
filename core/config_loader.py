@@ -17,7 +17,6 @@ def load_config():
         print("❌ Error: config.toml not found. Please create one based on the documentation templates.")
         sys.exit(1)
 
-
 def resolve_device(name_substring, kind="input"):
     """Find a device index by matching part of its name (case-insensitive)."""
     devices = sd.query_devices()

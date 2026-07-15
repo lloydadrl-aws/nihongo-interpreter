@@ -8,13 +8,13 @@ chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 
 # Audio Settings
 [audio]
-source = "meeting_app"
+source = "mic"
 sample_rate = 16000
 channels = 1
 silence_duration = 1.5
 
 [audio.devices]
-mic = "Headset Microphone"
+mic = "Internal Microphone"
 meeting_app = "CABLE Output"
 
 [audio.mic]
