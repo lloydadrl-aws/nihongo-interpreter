@@ -8,7 +8,7 @@ from playwright.sync_api import sync_playwright
 
 # Core components
 from core.config_loader import load_config, load_audio_source_config
-from core.browser_engine import launch_monitored_chrome, send_message_via_browser
+from core.browser_engine import launch_monitored_chrome, send_message_via_browser, wait_for_ica_response, count_response_bubbles
 
 # Clean pipeline imports
 import core.pipeline_workers as workers
@@ -86,14 +86,26 @@ def main():
             daemon=True
         ).start()
 
+        # Tracks whether ICA has finished its previous reply. Starts True since
+        # nothing has been sent yet, so there's nothing to wait on.
+        is_ica_output_there = True
+
         try:
             # 2. Main execution event loop handles browser typing
             while True:
-                while not text_queue.empty():
+                if is_ica_output_there and not text_queue.empty():
                     input_number, payload_text = text_queue.get_nowait()
-                    send_message_via_browser(page, payload_text)
+                    before_count = count_response_bubbles(page)
+                    sent_ok = send_message_via_browser(page, payload_text)
                     print(f"🚀 Transcribed input {input_number} sent to ICA...\n")
                     text_queue.task_done()
+
+                    if sent_ok:
+                        is_ica_output_there = False
+                        is_ica_output_there = wait_for_ica_response(page, before_count)
+                    else:
+                        # Send failed outright — don't block the queue on it.
+                        is_ica_output_there = True
 
                 time.sleep(0.05)
                 page.evaluate("() => {}")

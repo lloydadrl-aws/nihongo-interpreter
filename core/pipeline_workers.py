@@ -44,7 +44,7 @@ def audio_processor_worker(recognizer, language_code, sample_rate):
         print(f"[PROCESSING] Transcribing input {input_number} in background...")
         client_text = transcribe_audio_array(audio_data, recognizer, language_code=language_code, sample_rate=sample_rate)
 
-        if client_text:
+        if client_text and client_text.strip():
             client_payload = f"/c\n{client_text}"
             text_queue.put((input_number, client_payload))
         else:
