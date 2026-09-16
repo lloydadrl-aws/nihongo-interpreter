@@ -1,6 +1,7 @@
 # ICA new-chat url
 [ICA_URL]
 base_url = "https://japan.ica.ibm.com/ica/curatorai/apps/ui/new-chat/"
+new-gen_url = "https://nextgen-beta.ica.ibm.com/ica/chat"
 
 # Path of your google chrome browser
 [chrome]
@@ -8,7 +9,7 @@ chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 
 # Audio Settings
 [audio]
-source = "mic"
+source = "meeting_app"
 sample_rate = 16000
 channels = 1
 silence_duration = 1.5
@@ -16,11 +17,16 @@ silence_duration = 1.5
 [audio.devices]
 mic = "Internal Microphone"
 meeting_app = "CABLE Output"
+head_set = "Headset Microphone"
 
 [audio.mic]
 threshold = 0.01
 silence_duration = 1.5
 
 [audio.meeting_app]
-threshold = 0.002
-silence_duration = 0.7
+threshold = 0.01
+silence_duration = 1.5
+
+[audio.head_set]
+threshold = 0.01
+silence_duration = 1.5
