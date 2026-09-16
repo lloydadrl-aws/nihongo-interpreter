@@ -11,7 +11,7 @@ chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 [audio]
 source = "meeting_app"
 sample_rate = 16000
-channels = 1
+channels = 2
 silence_duration = 1.5
 
 [audio.devices]
